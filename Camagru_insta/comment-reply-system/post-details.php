@@ -1,4 +1,4 @@
-<?php include('functions.php'); ?>
+<?php include('../server.php'); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,8 +12,8 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-6 col-md-offset-3 post">
-			<h2>Post title</h2>
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum nam illum ipsum corporis voluptatibus, perspiciatis possimus vitae consequuntur. Voluptate quisquam reprehenderit sapiente cupiditate esse, consequuntur vel dicta culpa dolorem rerum.</p>
+			<h2>Post</h2>
+			<p>Post your pictures here .</p>
 		</div>
 
 		<!-- comments section -->

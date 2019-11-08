@@ -1,38 +1,58 @@
-
 <?php
-$DB_DSN = 'mysql:dbname=camagru;host=localhost';
-$DB_USER = 'root';
+$DB_USER = 'root' ;
 $DB_PASSWORD = '';
+$DB_HOST = 'localhost';
+$DB_NAME = '';
+$DB_DSN = "mysql:host=$DB_HOST;dbname=$DB_NAME";
 
-try {
-   /**
-    * IF DATABASE EXIST DROP ELSE CREATE
-    */
-   $conn = new PDO("mysql:host=localhost", $DB_USER, $DB_PASSWORD);
-   // set the PDO error mode to exception
-   $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-   $stmt = "Drop DATABASE IF EXISTS camagru;";
-   $sql = "CREATE DATABASE IF NOT EXISTS camagru;";
-   // use exec() because no results are returned
-   $conn->exec($stmt);
-   echo "Database dropped successfully<br>";
-   $conn->exec($sql);
-   echo "Database created successfully<br>";
-   /**
-    * IF DATABASE IS CREATED, CREATE TABLES
-    */
-   $db = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
-   $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-   $query = "CREATE TABLE users (
-       id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-       username VARCHAR(30) NOT NULL,
-       email VARCHAR(30),
-       password VARCHAR(50) NOT NULL
-       );";
-   $db->exec($query);
-   echo "users table created successfully<br>";
-   }
-   catch(PDOException $e)
-   {
-       echo $sql . "<br>" . $e->getMessage();
-   }
+try
+{
+	$conn = new PDO('mysql:host='.$DB_HOST, $DB_USER, $DB_PASSWORD);
+	$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	echo "Connected<br>";
+	$sql = "CREATE DATABASE IF NOT EXISTS `$DB_NAME`";
+	$conn->exec($sql);
+	echo "Database created<br>";
+}
+catch (PDOException $e) 
+{
+	echo $e->getMessage();
+}
+
+$conn = NULL;
+
+try
+{
+	$conn = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
+	$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	$createdb = "CREATE TABLE IF NOT EXISTS $DB_NAME.`users` 
+				( `id` INT NOT NULL AUTO_INCREMENT , 
+				`username` VARCHAR(50) NOT NULL , 
+				`passwd` VARCHAR(255) NOT NULL , 
+				`email` VARCHAR(80) NOT NULL ,
+				`verified` BOOLEAN NOT NULL DEFAULT FALSE, 
+				`verification` VARCHAR(255) DEFAULT NULL,
+				`profile-pic` VARCHAR(255) DEFAULT NULL,
+				`notifications` BOOLEAN NOT NULL DEFAULT TRUE , 
+				PRIMARY KEY (`id`)) ENGINE = InnoDB ";
+	$stmt = $conn->prepare($createdb);
+	$stmt->execute();
+	$stmt = NULL;
+	$createtab = "CREATE TABLE $DB_NAME.`images` 
+				(`id` INT NOT NULL AUTO_INCREMENT , 
+				`location` TEXT NOT NULL,
+				`author` VARCHAR(20) NOT NULL, 
+				`creation_date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, 
+				`likes` TEXT NOT NULL, 
+				`comments` TEXT NOT NULL, 
+				PRIMARY KEY (`id`)) ENGINE = InnoDB";
+	$stmt = $conn->prepare($createtab);
+	$stmt->execute();
+	echo "Tables Created<br>";
+}
+catch (PDOException $e) 
+{
+	echo $e->getMessage();
+}
+$conn = NULL; //NULL or unset?
+?>

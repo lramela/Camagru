@@ -1,66 +1,23 @@
-<?php 
-include('functions.php');
-
-if (!isAdmin()) {
-	$_SESSION['msg'] = "You must log in first";
-	header('location: login.php');
-}
-
-if (isset($_GET['logout'])) {
-	session_destroy();
-	unset($_SESSION['user']);
-	header("location: login.php");
-}
+<?php
+require_once ('server.php');
+require ('./valid_session_check.php');
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>Home</title>
-	<link rel="stylesheet" type="text/css" href="../style.css">
-	<style>
-	.header {
-		background: #003366;
-	}
-	button[name=register_btn] {
-		background: #003366;
-	}
-	</style>
 </head>
 <body>
-	<div class="header">
-		<h2>Admin - Home Page</h2>
-	</div>
-	<div class="content">
-		<!-- notification message -->
-		<?php if (isset($_SESSION['success'])) : ?>
-			<div class="error success" >
-				<h3>
-					<?php 
-						echo $_SESSION['success']; 
-						unset($_SESSION['success']);
-					?>
-				</h3>
-			</div>
-		<?php endif ?>
-
-		<!-- logged in user information -->
-		<div class="profile_info">
-			<img src="../images/admin_profile.png"  >
-
-			<div>
-				<?php  if (isset($_SESSION['user'])) : ?>
-					<strong><?php echo $_SESSION['user']['username']; ?></strong>
-
-					<small>
-						<i  style="color: #888;">(<?php echo ucfirst($_SESSION['user']['user_type']); ?>)</i> 
-						<br>
-						<a href="home.php?logout='1'" style="color: red;">logout</a>
-                       &nbsp; <a href="create_user.php"> + add user</a>
-					</small>
-
-				<?php endif ?>
-			</div>
-		</div>
-	</div>
+	<h1>Welcome</h1>
+	<p>This page is only to test if a user has successfully logged in.<b>
+		This will eventually be a profile page or pages directed to<br>
+		here will direct to index.php.
+	</p>
+	<p>Hi <?php echo $_SESSION['username']; ?>, welcome to Camagru.</p>
+	<a href="signout.php"><input type="submit" value="Sign Out"></a>
+	<a href="profile.php"><input type="submit" value="Go to profile"></a>
 </body>
 </html>
