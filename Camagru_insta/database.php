@@ -1,6 +1,6 @@
 <?php
 $DB_USER = 'root' ;
-$DB_PASSWORD = '';
+$DB_PASSWORD = '0632603320';
 $DB_HOST = 'localhost';
 $DB_NAME = '';
 $DB_DSN = "mysql:host=$DB_HOST;dbname=$DB_NAME";

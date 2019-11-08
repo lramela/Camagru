@@ -1,5 +1,5 @@
 <?php
-require_once('database.php'); // does this make a new connection each time it's called?
+require_once('database.php');
 try
 {
 	$conn = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
@@ -8,6 +8,6 @@ try
 }
 catch (PDOExeption $e)
 {
-	echo $e->getMessage; // do I need to call die here if connection fails?
+	echo $e->getMessage;
 }
 ?>

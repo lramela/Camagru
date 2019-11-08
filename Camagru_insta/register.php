@@ -25,15 +25,17 @@
 					unset($_SESSION['message']);
 				}
 	?></div>
-	<form  /*action="form.php" method="POST" autocomplete="off" enctype="multipart/form-data">
+	<form action="form.php" method="POST" autocomplete="off" enctype="multipart/form-data">
 		<span>Username:</span><input type="text" placeholder="username" name="username" required/><br/>
 		<span>Email:</span><input type="email" placeholder="email address" name="email" required/><br/>
 		<span>Password:</span><input type="password" placeholder="password" name="passwd" required/><br/>
 		<span>Confirm password:</span><input type="password" placeholder="confirm Password" name="confirm-passwd" required/><br/>
 		<input type="submit" name="submit-signup" value="Register" /><br>
-		<input type="submit" name="resend-link" value="Resend link">
+		<input type="submit" name="resend-link" value="Resend link"><br/>
+
 		<br>
 		<span>Have an account?</span><br>
+		
 	<a href="login.php"><input type="submit" value="Login"></a>
 	</form>
 	</body>
